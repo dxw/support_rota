@@ -1,0 +1,37 @@
+<% title = 'Opsgenie rotations, grouped by schedule' %>
+<% content_for :title do %>
+   <%= "Support rota: #{title}" %>
+<% end %>
+
+<h2><%= title %></h2>
+
+<ul class="schedules">
+  <% @schedules.each do |schedule| %>
+    <li id="schedule_<%= schedule.id %>" class="schedule">
+      <dl>
+        <dt>schedule name</dt>
+        <dd class="schedule-name"><%= schedule.name %></dd>
+
+        <dt>id</dt>
+        <dd class="schedule-id"><%= schedule.id %></dd>
+      </dl>
+
+      <% if schedule.rotations.any? %>
+        <ul class="rotations">
+          <% schedule.rotations.each do |rotation| %>
+            <% is_active = @active_rotations.include?(rotation) ? 'active' : '' %>
+            <li id="rotation_<%= rotation.id %>" class="rotation <%= is_active %>">
+              <dl>
+                <dt>rotation name</dt>
+                <dd class="rotation-name"><%= rotation.name -%></dd>
+
+                <dt>id</dt>
+                <dd class="rotation-id"><%= rotation.id %></dd>
+              </dl>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
